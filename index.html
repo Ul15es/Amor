@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TE AMO ELIZABETH</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 3em;
+      color: #ff0000; /* 🔴 rojo brillante */
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff3333, 0 0 40px #ff6666;
+      z-index: 1;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff3333; }
+      to   { text-shadow: 0 0 20px #ff3333, 0 0 40px #ff0000; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="rain"></canvas>
+  <h1>5 MESES MARAVILLOSOS</h1>
+
+  <script>
+    const canvas = document.getElementById("rain");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const phrase = "TE AMO ELIZABETH"; 
+    const fontSize = 28;
+    const columns = Math.floor(canvas.width / (fontSize * 2));
+
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * canvas.height;
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#ff69b4"; // 🌸 rosa para la lluvia
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        ctx.fillText(phrase, i * fontSize * 2, canvas.height - drops[i]);
+
+        drops[i] += 1.5; // velocidad de subida
+
+        if (drops[i] > canvas.height + 200) {
+          drops[i] = 0;
+        }
+      }
+    }
+
+    setInterval(draw, 50);
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
